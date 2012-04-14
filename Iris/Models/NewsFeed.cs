@@ -26,5 +26,6 @@ namespace Iris.Models
             JsonObject feedRetrieved = _client.Get("/me/home", parameters) as JsonObject;
             NewsItems = feedRetrieved["data"] as JsonArray;
         }
+
     }
 }

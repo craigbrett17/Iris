@@ -12,12 +12,21 @@ using System.Drawing;
 
 namespace Iris.Presenters
 {
+    /// <summary>
+    /// Handles displaying of all the user's friends
+    /// </summary>
     public class FriendsPresenter : Presenter<Views.IPresenterHost>
     {
         private ImageList _friendsImages;
         private BackgroundWorker pictureWorker;
         public delegate void PictureLoadedHandler(object sender, PictureLoadedEventArgs e);
+        /// <summary>
+        /// An event triggered when a new picture is finished loading
+        /// </summary>
         public event PictureLoadedHandler PictureLoaded;
+        /// <summary>
+        /// A listview containing all the user's friends
+        /// </summary>
         public ListView FriendsListView { get; set; }
 
         public FriendsPresenter(Views.IPresenterHost view)
@@ -32,6 +41,9 @@ namespace Iris.Presenters
             GenerateListView();
         }
 
+        /// <summary>
+        /// The ordered dictionary of the user's friends
+        /// </summary>
         public Dictionary<string, string> Connections
         {
             get
@@ -109,6 +121,7 @@ namespace Iris.Presenters
     }
 
     // This is a friends specific enough thing to be put here. For now.
+    // TODO: Put this somewhere appropriate
     public class PictureLoadedEventArgs : EventArgs
     {
         public Image Image { get; set; }
@@ -119,7 +132,6 @@ namespace Iris.Presenters
             this.Key = key;
             this.Image = img;
         }
-
 
     }
 }

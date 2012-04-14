@@ -30,12 +30,19 @@
         {
             this.menuBar = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.newStatusMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.friendsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.allFriendsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newStatusMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contentPanel = new System.Windows.Forms.Panel();
+            this.viewMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.newsFeedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.profileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.messagesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.eventsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusBar = new System.Windows.Forms.StatusStrip();
             this.menuBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,9 +50,11 @@
             // 
             this.menuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
+            this.viewMenu,
             this.friendsMenu});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
             this.menuBar.Name = "menuBar";
+            this.menuBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.menuBar.Size = new System.Drawing.Size(440, 24);
             this.menuBar.TabIndex = 0;
             this.menuBar.Text = "MenuBar";
@@ -60,6 +69,13 @@
             this.fileMenu.Size = new System.Drawing.Size(35, 20);
             this.fileMenu.Text = "&File";
             // 
+            // newStatusMenuItem
+            // 
+            this.newStatusMenuItem.Name = "newStatusMenuItem";
+            this.newStatusMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.newStatusMenuItem.Text = "Post new &status...";
+            this.newStatusMenuItem.Click += new System.EventHandler(this.newStatusMenuItem_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -70,6 +86,7 @@
             this.exitMenuItem.Name = "exitMenuItem";
             this.exitMenuItem.Size = new System.Drawing.Size(163, 22);
             this.exitMenuItem.Text = "E&xit";
+            this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
             // friendsMenu
             // 
@@ -86,13 +103,6 @@
             this.allFriendsMenuItem.Text = "&All friends";
             this.allFriendsMenuItem.Click += new System.EventHandler(this.allFriendsMenuItem_Click);
             // 
-            // newStatusMenuItem
-            // 
-            this.newStatusMenuItem.Name = "newStatusMenuItem";
-            this.newStatusMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.newStatusMenuItem.Text = "Post new &status...";
-            this.newStatusMenuItem.Click += new System.EventHandler(this.newStatusMenuItem_Click);
-            // 
             // contentPanel
             // 
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -101,11 +111,64 @@
             this.contentPanel.Size = new System.Drawing.Size(440, 354);
             this.contentPanel.TabIndex = 1;
             // 
+            // viewMenu
+            // 
+            this.viewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newsFeedMenuItem,
+            this.profileMenuItem,
+            this.toolStripSeparator2,
+            this.eventsMenuItem,
+            this.messagesMenuItem});
+            this.viewMenu.Name = "viewMenu";
+            this.viewMenu.Size = new System.Drawing.Size(41, 20);
+            this.viewMenu.Text = "&View";
+            // 
+            // newsFeedMenuItem
+            // 
+            this.newsFeedMenuItem.Name = "newsFeedMenuItem";
+            this.newsFeedMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newsFeedMenuItem.Text = "&News Feed";
+            this.newsFeedMenuItem.Click += new System.EventHandler(this.newsFeedMenuItem_Click);
+            // 
+            // profileMenuItem
+            // 
+            this.profileMenuItem.Enabled = false;
+            this.profileMenuItem.Name = "profileMenuItem";
+            this.profileMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.profileMenuItem.Text = "&Profile";
+            // 
+            // messagesMenuItem
+            // 
+            this.messagesMenuItem.Enabled = false;
+            this.messagesMenuItem.Name = "messagesMenuItem";
+            this.messagesMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.messagesMenuItem.Text = "&Messages";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            // 
+            // eventsMenuItem
+            // 
+            this.eventsMenuItem.Enabled = false;
+            this.eventsMenuItem.Name = "eventsMenuItem";
+            this.eventsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.eventsMenuItem.Text = "&Events";
+            // 
+            // statusBar
+            // 
+            this.statusBar.Location = new System.Drawing.Point(0, 356);
+            this.statusBar.Name = "statusBar";
+            this.statusBar.Size = new System.Drawing.Size(440, 22);
+            this.statusBar.TabIndex = 2;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(440, 378);
+            this.Controls.Add(this.statusBar);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.menuBar);
             this.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -131,6 +194,13 @@
         private System.Windows.Forms.ToolStripMenuItem allFriendsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newStatusMenuItem;
         private System.Windows.Forms.Panel contentPanel;
+        private System.Windows.Forms.ToolStripMenuItem viewMenu;
+        private System.Windows.Forms.ToolStripMenuItem newsFeedMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem profileMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem eventsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem messagesMenuItem;
+        private System.Windows.Forms.StatusStrip statusBar;
     }
 }
 

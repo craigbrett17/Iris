@@ -26,12 +26,11 @@ namespace Iris.Views
         {
             try
             {
-                _presenter = new NewsFeedPresenter(this);
-                var presenterObject = _presenter as NewsFeedPresenter;
-                JsonArray newsObject = presenterObject.NewsItems;
-                // TODO: Get presenter's info to display on the form somewhere
-                MessageBox.Show(String.Format("Retrieved {0} stories in the past 2 hours. Now if only we knew what to do with them...", newsObject.Count), "News feed retrieved",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                NewsFeedPresenter newsFeedPresenter = new NewsFeedPresenter(this);
+                _presenter = newsFeedPresenter;
+                contentPanel.Controls.Clear();
+                contentPanel.Controls.Add(newsFeedPresenter.NewsListView);
+                contentPanel.Controls[0].Focus();
             }
             catch (FacebookApiException ex)
             {
@@ -77,6 +76,16 @@ namespace Iris.Views
         {
             NewStatusDialog dialog = new NewStatusDialog();
             dialog.ShowDialog();
+        }
+
+        private void exitMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void newsFeedMenuItem_Click(object sender, EventArgs e)
+        {
+            DisplayNewsFeed();
         }
 
     }
