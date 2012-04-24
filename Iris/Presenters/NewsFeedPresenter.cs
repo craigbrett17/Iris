@@ -6,19 +6,20 @@ using Iris.Models;
 using Facebook;
 using System.Windows.Forms;
 using System.Drawing;
+using Iris.Views;
 
 namespace Iris.Presenters
 {
     public class NewsFeedPresenter : Presenter<Views.IPresenterHost>
     {
-        public ListView NewsListView { get; set; }
+        public StoryListBox NewsListBox { get; set; }
 
         public NewsFeedPresenter(Views.IPresenterHost view)
             : base(view)
         {
             this.Model = new NewsFeed();
-            NewsListView = new ListView();
-            GenerateListView();
+            NewsListBox = new StoryListBox();
+            GenerateListBox();
         }
 
         public Facebook.JsonArray NewsItems
@@ -29,49 +30,15 @@ namespace Iris.Presenters
             }
         }
 
-        private void GenerateListView()
+        private void GenerateListBox()
         {
-            NewsListView.View = System.Windows.Forms.View.Tile;
-            NewsListView.Dock = DockStyle.Fill;
-            NewsListView.FullRowSelect = true;
-            NewsListView.MultiSelect = false;
-            NewsListView.Name = "newsListView";
+            NewsListBox.Dock = DockStyle.Fill;
+            NewsListBox.SelectionMode = SelectionMode.One;
+            NewsListBox.Name = "newsListBox";
             foreach (JsonObject item in NewsItems)
             {
-                ListViewItem viewItem = new ListViewItem();
-                StringBuilder itemText = new StringBuilder();
-                DateTime createTime = DateTimeConvertor.FromIso8601FormattedDateTime(item["created_time"].ToString());
-                if (item.ContainsKey("story"))
-                {
-                    itemText.AppendLine(item["story"] as string);
-                }
-                else
-                {
-                    itemText.Append(((JsonObject)item["from"])["name"] as string);
-                    itemText.Append(" posted");
-                    if (item.ContainsKey("type"))
-                    {
-                        switch (item["type"] as string)
-                        {
-                            case "link":
-                                itemText.Append(" a link");
-                                break;
-                            case "photos":
-                                itemText.Append(" a photo");
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    itemText.AppendLine(": ");
-                    if (item.ContainsKey("message"))
-                    {
-                        itemText.AppendLine(item["message"] as string);
-                    } 
-                }
-                itemText.AppendLine(createTime.ToString("HH:mm"));
-                viewItem.Text = itemText.ToString();
-                NewsListView.Items.Add(viewItem);
+                Story viewItem = new Story(item);
+                NewsListBox.Items.Add(viewItem);
             }
         }
 

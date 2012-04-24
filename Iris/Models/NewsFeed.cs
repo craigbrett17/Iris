@@ -20,9 +20,10 @@ namespace Iris.Models
         public NewsFeed()
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            DateTime subtractedTime = DateTime.Now.AddHours(-2);
+            DateTime subtractedTime = DateTime.Now.AddHours(-6);
             var sinceTime = DateTimeConvertor.ToIso8601FormattedDateTime(subtractedTime);
             parameters.Add("since", sinceTime);
+            parameters.Add("limit", 50);
             JsonObject feedRetrieved = _client.Get("/me/home", parameters) as JsonObject;
             NewsItems = feedRetrieved["data"] as JsonArray;
         }

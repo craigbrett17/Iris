@@ -39,9 +39,19 @@ namespace Iris.Views
 
         private void postButton_Click(object sender, EventArgs e)
         {
-            ((NewStatusPresenter)_presenter).PostStatus();
-            System.Threading.Thread.Sleep(3000);
-            this.Close();
+            try
+            {
+                ((NewStatusPresenter)_presenter).PostStatus();
+                this.Close();
+            }
+            catch (Facebook.FacebookApiException ex)
+            {
+                MessageBox.Show(ex.Message, "Error in request", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Iris Unhandled exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }

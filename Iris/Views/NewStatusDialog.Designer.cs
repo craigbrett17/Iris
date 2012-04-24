@@ -111,12 +111,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.closeButton;
             this.ClientSize = new System.Drawing.Size(292, 223);
+            this.ControlBox = false;
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.postButton);
             this.Controls.Add(this.audienceButton);
             this.Controls.Add(this.friendsButton);
             this.Controls.Add(this.locationButton);
             this.Controls.Add(this.statusBox);
+            this.MaximizeBox = false;
             this.Name = "NewStatusDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Iris - New Status";

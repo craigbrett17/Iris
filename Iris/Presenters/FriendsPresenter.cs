@@ -18,6 +18,7 @@ namespace Iris.Presenters
     public class FriendsPresenter : Presenter<Views.IPresenterHost>
     {
         private ImageList _friendsImages;
+        private ContextMenuStrip _friendsMenu;
         private BackgroundWorker pictureWorker;
         public delegate void PictureLoadedHandler(object sender, PictureLoadedEventArgs e);
         /// <summary>
@@ -35,6 +36,7 @@ namespace Iris.Presenters
             Model = new Friends();
             _friendsImages = new ImageList();
             FriendsListView = new ListView();
+            _friendsMenu = new ContextMenuStrip();
             pictureWorker = new BackgroundWorker();
             pictureWorker.DoWork += pictureWorker_DoWork;
             pictureWorker.RunWorkerCompleted += pictureWorker_RunWorkerComplete;
@@ -62,6 +64,20 @@ namespace Iris.Presenters
             FriendsListView.Name = "friendsListView";
             _friendsImages.ImageSize = new Size(50, 50);
             FriendsListView.LargeImageList = _friendsImages;
+            _friendsMenu.RenderMode = ToolStripRenderMode.System;
+            var friendViewMenuItem = new ToolStripMenuItem("&View Profile");
+            friendViewMenuItem.Name = "friendViewMenuItem";
+            _friendsMenu.Items.Add(friendViewMenuItem);
+            var friendMessageMenuItem = new ToolStripMenuItem("Send &Message");
+            friendMessageMenuItem.Name = "friendMessageMenuItem";
+            _friendsMenu.Items.Add(friendMessageMenuItem);
+            var friendPostMenuItem = new ToolStripMenuItem("&Post On Wall");
+            friendPostMenuItem.Name = "friendPostMenuItem";
+            _friendsMenu.Items.Add(friendPostMenuItem);
+            var friendPokeMenuItem = new ToolStripMenuItem("Pok&e");
+            friendPokeMenuItem.Name = "friendPokeMenuItem";
+            _friendsMenu.Items.Add(friendPokeMenuItem);
+            FriendsListView.ContextMenuStrip = _friendsMenu;
             ScreenReader.SayStringAsync("Loading friends list...", false);
             foreach (var connection in Connections)
             {
@@ -85,13 +101,13 @@ namespace Iris.Presenters
                 {
                     _friendsImages.Images.Add(uid, img);
                     PictureLoaded(this, new PictureLoadedEventArgs(uid, img));
-                } 
+                }
             }
         }
 
         private void pictureWorker_RunWorkerComplete(object sender, RunWorkerCompletedEventArgs e)
         {
-            
+
         }
 
         // taken from a blog online http://www.digitalcoding.com/Code-Snippets/C-Sharp/C-Code-Snippet-Download-Image-from-URL.html
