@@ -31,7 +31,6 @@ namespace Iris.Views
                 contentPanel.Controls.Clear();
                 contentPanel.Controls.Add(newsFeedPresenter.NewsListBox);
                 contentPanel.Controls[0].Focus();
-                MessageBox.Show("The box contains " + newsFeedPresenter.NewsListBox.Items.Count + " items.");
             }
             catch (FacebookApiException ex)
             {
@@ -95,7 +94,7 @@ namespace Iris.Views
                 {
                     string uid = ((ListView)contentPanel.Controls[0]).SelectedItems[0].ImageKey;
                     string name = ((ListView)contentPanel.Controls[0]).SelectedItems[0].Text;
-                    _presenter.PokeFriend(uid, name);
+                    _presenter.PokeFriend(uid);
                     UpdateStatusBar("You have poked " + name);
                 }
             }

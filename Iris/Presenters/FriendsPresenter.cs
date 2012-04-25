@@ -94,8 +94,10 @@ namespace Iris.Presenters
         {
             foreach (string uid in Connections.Keys)
             {
-                JsonArray result = Facade.Client.Query(String.Format("SELECT pic_square FROM user WHERE uid='{0}';", uid)) as JsonArray;
-                string imageUrl = ((JsonObject)result[0])[0] as string;
+                string query = String.Format("SELECT pic_square FROM user WHERE uid={0};", uid);
+                var result = Facade.Client.Get("fql", new { q = query }) as JsonObject;
+                JsonArray data = result["data"] as JsonArray;
+                string imageUrl = ((JsonObject)data[0])[0] as string;
                 Image img = DownloadImage(imageUrl);
                 if (img != null)
                 {

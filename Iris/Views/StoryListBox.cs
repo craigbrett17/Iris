@@ -43,19 +43,24 @@ namespace Iris.Views
             if (story.StoryProperty != null)
             {
                 bodyText = story.StoryProperty;
-                e.ItemHeight = TextRenderer.MeasureText(bodyText, this.Font).Height;
+                SizeF stringSize = e.Graphics.MeasureString(bodyText, this.Font, this.Width);
+                e.ItemHeight = (int)stringSize.Height;
             }
             else
             {
                 nameText = story.FromName;
-                bodyText = String.Concat(story.Message, ". ", story.LinkName);
+                bodyText = String.Concat(story.Message, "\r\n", story.LinkName);
                 timeText = story.CreateTime.ToString("HH:mm");
-                int totalHeight = TextRenderer.MeasureText(nameText, boldFont).Height;
+                SizeF nameTextSize = e.Graphics.MeasureString(nameText, boldFont, this.Width);
+                SizeF bodyTextSize = e.Graphics.MeasureString(bodyText, this.Font, this.Width);
+                SizeF timeTextSize = e.Graphics.MeasureString(timeText, this.Font, this.Width);
+                e.ItemHeight = (int)nameTextSize.Height + (int)bodyTextSize.Height + (int)timeTextSize.Height + 5;
+                /* int totalHeight = TextRenderer.MeasureText(nameText, boldFont).Height;
                 totalHeight += 5;
                 totalHeight += TextRenderer.MeasureText(bodyText, this.Font).Height;
                 totalHeight += 5;
                 totalHeight += TextRenderer.MeasureText(timeText, this.Font).Height;
-                e.ItemHeight = totalHeight;
+                e.ItemHeight = totalHeight;*/
             }
         }
 
@@ -88,18 +93,22 @@ namespace Iris.Views
             if (story.StoryProperty != null)
             {
                 bodyText = story.StoryProperty;
-                e.Graphics.DrawString(bodyText, this.Font, textBrush, e.Bounds);
+                e.Graphics.DrawString(bodyText, this.Font, textBrush, new RectangleF(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height));
             }
             else
             {
                 nameText = story.FromName;
-                bodyText = String.Concat(story.Message, ". ", story.LinkName);
+                bodyText = String.Concat(story.Message, "\r\n", story.LinkName);
                 timeText = story.CreateTime.ToString("HH:mm");
-                e.Graphics.DrawString(nameText, boldFont, textBrush, new PointF(e.Bounds.X + 5, e.Bounds.Y + 5));
-                int stringHeight = TextRenderer.MeasureText(nameText, boldFont).Height;
-                e.Graphics.DrawString(bodyText, this.Font, textBrush, new PointF(e.Bounds.X + 5, e.Bounds.Y + stringHeight + 5));
-                stringHeight += 5 + TextRenderer.MeasureText(bodyText, this.Font).Height;
-                e.Graphics.DrawString(timeText, this.Font, textBrush, new PointF(e.Bounds.X + 5, e.Bounds.Y + stringHeight + 5));
+                int YOffset = 0;
+                SizeF stringSize = e.Graphics.MeasureString(nameText, boldFont, e.Bounds.Width - 5 - SystemInformation.VerticalScrollBarWidth);
+                e.Graphics.DrawString(nameText, boldFont, textBrush, new RectangleF(e.Bounds.X, e.Bounds.Y + YOffset, stringSize.Width, stringSize.Height));
+                YOffset += (int)stringSize.Height + 5;
+                stringSize = e.Graphics.MeasureString(bodyText, this.Font, e.Bounds.Width - 5 - SystemInformation.VerticalScrollBarWidth);
+                e.Graphics.DrawString(bodyText, this.Font, textBrush, new RectangleF(e.Bounds.X, e.Bounds.Y + YOffset, stringSize.Width, stringSize.Height));
+                YOffset += (int)stringSize.Height + 5;
+                stringSize = e.Graphics.MeasureString(timeText, this.Font, e.Bounds.Width - 5 - SystemInformation.VerticalScrollBarWidth);
+                e.Graphics.DrawString(timeText, this.Font, textBrush, new RectangleF(e.Bounds.X, e.Bounds.Y + YOffset, stringSize.Width, stringSize.Height));
             }
         }
 

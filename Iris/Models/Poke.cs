@@ -17,7 +17,7 @@ namespace Iris.Models
         public Poke(string idIn)
         {
             this.Id = idIn;
-            _client.Post(String.Format("/{0}/pokes", this.Id));
+            _client.Post(String.Format("{0}/pokes", this.Id), null);
         }
 
     }

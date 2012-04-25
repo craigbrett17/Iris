@@ -14,7 +14,7 @@ namespace Iris.Presenters
 
         #region NonPresenterSpecificMethods
 
-        public void PokeFriend(string id, string name)
+        public void PokeFriend(string id)
         {
             Poke poke = new Poke(id);
         }
